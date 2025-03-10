@@ -1,10 +1,12 @@
 # Mission Demolition
  
-Most of this project was modeled after Jeremy Gibson Bond's Mission Demolition tutorial in chapter 30 of "Introduction to Game Design, Prototyping, and Development." Despite this, I added changes such as:
+I made the following changes after following the tutorial from chapter 30 of "Introduction to Game Design, Prototyping, and Development" by Jeremy Gibson Bond. Despite this, I added changes such as:
 
 -A "game over" screen with a "restart" button
 
--More levels that get increasingly harder
+-More levels that get increasingly harder as you progress
+
+-A black band that appears when the projectile is drawn in the slingshot and disappears when it is shot
 
 -Audio for the slingshot snapping
 
