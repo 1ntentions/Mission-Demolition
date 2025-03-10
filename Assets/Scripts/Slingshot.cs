@@ -5,6 +5,7 @@ public class Slingshot : MonoBehaviour
     [Header("Set in inspector")]
     public GameObject projectilePrefab;
     public float velocityMult = 5f;
+    public LineRenderer lineRenderer;
 
     [Header("Set dynamically")]
     public Vector3 launchPos;
@@ -15,8 +16,19 @@ public class Slingshot : MonoBehaviour
 
     private void Awake(){
         launchPoint = GameObject.Find("LaunchPoint");
-        
         launchPos = launchPoint.transform.position;
+
+        lineRenderer = GetComponent<LineRenderer>();
+        if (lineRenderer == null){
+            lineRenderer = gameObject.AddComponent<LineRenderer>();
+        }
+        lineRenderer.positionCount = 2;
+        lineRenderer.startWidth = 0.2f;
+        lineRenderer.endWidth = 0.2f;
+        lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
+        lineRenderer.startColor = Color.black;
+        lineRenderer.endColor = Color.black;
+        lineRenderer.enabled = false;
     }
 
     void Start()
@@ -44,6 +56,9 @@ public class Slingshot : MonoBehaviour
         Vector3 newPos = launchPos + mouseDelta;
         projectile.transform.position = newPos;
 
+        lineRenderer.SetPosition(0, launchPos);
+        lineRenderer.SetPosition(1, newPos);
+
         if(Input.GetMouseButtonUp(0)){
             aimMode = false;
             projectileRigidbody.isKinematic = false;
@@ -54,6 +69,8 @@ public class Slingshot : MonoBehaviour
             projectileRigidbody.linearVelocity = -mouseDelta * velocityMult;
             FollowCam.POI = projectile;
             projectile = null;
+
+            lineRenderer.enabled = false;
         }
     }
     
@@ -63,5 +80,6 @@ public class Slingshot : MonoBehaviour
         projectile.transform.position = launchPos;
         projectile.GetComponent<Rigidbody>().isKinematic = true;
         projectileRigidbody = projectile.GetComponent<Rigidbody>();
+        lineRenderer.enabled = true;
     }
 }
